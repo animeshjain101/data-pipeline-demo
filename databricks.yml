@@ -1,0 +1,54 @@
+bundle:
+  name: data-pipeline
+
+resources:
+  jobs:
+    bronze-silver-gold:
+      name: bronze-silver-gold-job
+      git_source:
+        git_branch: main
+        git_provider: gitHub
+        git_url: https://github.com/animeshjain101/data-pipeline-demo
+      tags:
+        Job_from: git
+        type: DAB Processed
+        CICD: github
+      email_notifications:
+        on_start: 
+        - animesh.jain@celebaltech.com
+      tasks:
+
+      - task_key: bronze_task
+        notebook_task:
+          notebook_path: src/bronze_layer
+          source: GIT
+
+      - task_key: silver_task
+        notebook_task:
+          notebook_path: src/silver_layer
+          source: GIT
+        depends_on: 
+          - task_key: bronze_task
+
+      - task_key: gold_task
+        notebook_task:
+          notebook_path: src/gold_layer
+          source: GIT
+        depends_on: 
+          - task_key: silver_task
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-557535ba-0d0d.cloud.databricks.com/
+      root_path: ~/${bundle.name}/${bundle.target}
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-557535ba-0d0d.cloud.databricks.com/
+
+
+

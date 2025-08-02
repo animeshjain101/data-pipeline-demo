@@ -1,5 +1,5 @@
 import pytest
-from src.data_generator import generate_sales_data
+from files.data_generator import generate_sales_data
 import pandas as pd
 import os
 
