@@ -5,6 +5,8 @@ resources:
   jobs:
     bronze-silver-gold:
       name: bronze-silver-gold-job
+      run_as: 
+        user_name: animeshjainwork@gmail.com
       git_source:
         git_branch: main
         git_provider: gitHub
