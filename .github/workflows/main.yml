@@ -19,6 +19,6 @@ jobs:
           client_id     = ${{ secrets.SPN_CLIENT_ID_DEV }}
           client_secret = ${{ secrets.SPN_SECRET_DEV }}
           EOF
-      - run: databricks bundle deploy -t dev
+      - run: databricks bundle deploy -t dev -p sp-dev
       - run: echo "I have deployed the Asset Bundle on databricks"
       # - run: pytest
